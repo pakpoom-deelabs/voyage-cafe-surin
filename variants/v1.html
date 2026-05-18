@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOYAGE cafe' — Start Your Daily Journey · Surin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coffee: {
+              50:  '#FBF8F3',
+              100: '#F5EDE0',
+              200: '#E8D5B7',
+              300: '#D4B896',
+              400: '#B8956A',
+              500: '#8B5E3C',
+              600: '#6B3A2A',
+              700: '#4A2518',
+              800: '#2C1A0E',
+              900: '#1C1008',
+            },
+            gold: '#D4A853',
+            forest: '#1A3A2A',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            body:    ['Inter', 'system-ui', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: #FBF8F3; color: #1C1008; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #FBF8F3; }
+    ::-webkit-scrollbar-thumb { background: #8B5E3C; border-radius: 3px; }
+
+    /* ── Navbar ── */
+    #navbar { transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease; }
+    #navbar.scrolled {
+      background: rgba(28, 16, 8, 0.96);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.35);
+    }
+
+    /* ── Hero ── */
+    .hero-bg {
+      background-image: url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1920&q=85');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* ── Hero animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(36px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-fadeup { opacity: 0; animation: fadeUp 0.9s ease forwards; }
+    .d1 { animation-delay: 0.15s; }
+    .d2 { animation-delay: 0.35s; }
+    .d3 { animation-delay: 0.55s; }
+    .d4 { animation-delay: 0.75s; }
+    .d5 { animation-delay: 0.95s; }
+
+    /* ── Scroll-reveal ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.in  { opacity: 1; transform: translateY(0); }
+    .reveal-l   { opacity: 0; transform: translateX(-32px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-l.in { opacity: 1; transform: translateX(0); }
+    .reveal-r   { opacity: 0; transform: translateX(32px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-r.in { opacity: 1; transform: translateX(0); }
+
+    /* ── Gold utilities ── */
+    .text-gold  { color: #D4A853; }
+    .bg-gold    { background-color: #D4A853; }
+    .border-gold{ border-color: #D4A853; }
+
+    /* ── Section divider line ── */
+    .s-line { width: 56px; height: 3px; background: #D4A853; }
+
+    /* ── Menu card hover ── */
+    .menu-card img { transition: transform 0.55s ease; }
+    .menu-card:hover img { transform: scale(1.07); }
+
+    /* ── Gallery hover ── */
+    .gal-img { transition: transform 0.65s ease; }
+    .gal-wrap:hover .gal-img { transform: scale(1.1); }
+
+    /* ── Rating glass badge ── */
+    .rating-badge {
+      background: rgba(212,168,83,0.12);
+      border: 1px solid rgba(212,168,83,0.45);
+      backdrop-filter: blur(10px);
+    }
+
+    /* ── Pulse dot ── */
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+    .pulse-dot { animation: pulse 2s infinite; }
+
+    /* ── Scroll caret ── */
+    @keyframes scrollBob { 0%,100%{transform:translateY(0)}50%{transform:translateY(8px)} }
+    .scroll-bob { animation: scrollBob 2s ease-in-out infinite; }
+  </style>
+</head>
+<body class="antialiased">
+
+<!-- ══════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50 px-6 py-4">
+  <div class="max-w-7xl mx-auto flex items-center justify-between">
+
+    <!-- Logo -->
+    <a href="#home" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-full bg-gold flex items-center justify-center flex-shrink-0 shadow-lg">
+        <span class="font-display font-black text-coffee-900 text-base">V</span>
+      </div>
+      <div class="leading-none">
+        <div class="font-display font-bold text-white text-lg tracking-widest">VOYAGE</div>
+        <div class="text-gold text-xs tracking-[0.3em] mt-0.5">cafe'</div>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <div class="hidden md:flex items-center gap-7">
+      <a href="#home"    class="text-white/75 hover:text-white text-sm font-medium tracking-wide transition-colors duration-200">Home</a>
+      <a href="#menu"    class="text-white/75 hover:text-white text-sm font-medium tracking-wide transition-colors duration-200">Menu</a>
+      <a href="#gallery" class="text-white/75 hover:text-white text-sm font-medium tracking-wide transition-colors duration-200">Gallery</a>
+      <a href="#contact" class="text-white/75 hover:text-white text-sm font-medium tracking-wide transition-colors duration-200">Find Us</a>
+      <a href="tel:0969627764"
+         class="bg-gold text-coffee-900 px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide hover:bg-amber-400 transition-colors duration-200 shadow-md">
+        📞 Call Now
+      </a>
+    </div>
+
+    <!-- Hamburger -->
+    <button id="burgerBtn" class="md:hidden text-white p-2" aria-label="Toggle menu">
+      <svg id="iconOpen"  class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="iconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4 border-t border-white/20 pt-4">
+    <div class="flex flex-col gap-4 px-2">
+      <a href="#home"    class="text-white/80 text-sm font-medium" onclick="closeMob()">Home</a>
+      <a href="#menu"    class="text-white/80 text-sm font-medium" onclick="closeMob()">Menu</a>
+      <a href="#gallery" class="text-white/80 text-sm font-medium" onclick="closeMob()">Gallery</a>
+      <a href="#contact" class="text-white/80 text-sm font-medium" onclick="closeMob()">Find Us</a>
+      <a href="tel:0969627764" class="bg-gold text-coffee-900 text-center px-5 py-2.5 rounded-full text-sm font-semibold">📞 096-962-7764</a>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════
+     HERO
+══════════════════════════════════════════ -->
+<section id="home" class="hero-bg relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Gradient overlay -->
+  <div class="absolute inset-0 bg-gradient-to-b from-coffee-900/65 via-coffee-900/50 to-coffee-900/80"></div>
+
+  <!-- Dot pattern overlay -->
+  <div class="absolute inset-0 opacity-[0.07]"
+       style="background-image:radial-gradient(circle, #D4A853 1px, transparent 1px);background-size:48px 48px;"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+
+    <!-- Pre-label -->
+    <div class="anim-fadeup d1 inline-flex items-center gap-2 text-amber-300 text-xs font-medium tracking-[0.25em] uppercase mb-7">
+      <span>✦</span><span>Surin's Finest Coffee Experience</span><span>✦</span>
+    </div>
+
+    <!-- Headline -->
+    <h1 class="anim-fadeup d2 font-display text-white font-black leading-[1.1] mb-7"
+        style="font-size:clamp(2.6rem,7vw,5.5rem)">
+      Start Your<br>
+      <em class="text-gold not-italic">Daily Journey</em><br>
+      with Premium Coffee
+    </h1>
+
+    <!-- Sub -->
+    <p class="anim-fadeup d3 text-white/65 leading-relaxed max-w-xl mx-auto mb-10"
+       style="font-size:clamp(1rem,2.2vw,1.2rem)">
+      A cozy haven in the heart of Surin — where every sip is a new adventure
+      and every visit feels like a perfect escape.
+    </p>
+
+    <!-- Rating badge -->
+    <div class="anim-fadeup d4 inline-flex items-center gap-3 rating-badge rounded-full px-6 py-3 mb-10">
+      <span class="text-gold tracking-tight">★★★★★</span>
+      <span class="text-white font-semibold text-lg font-display">4.6</span>
+      <span class="text-white/40 text-sm">·</span>
+      <span class="text-white/65 text-sm">117+ Google Reviews</span>
+    </div>
+
+    <!-- CTAs -->
+    <div class="anim-fadeup d5 flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="#menu"
+         class="bg-gold text-coffee-900 px-9 py-4 rounded-full font-semibold text-base hover:bg-amber-400 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-amber-500/30">
+        Explore Our Menu →
+      </a>
+      <a href="#contact"
+         class="border border-white/35 text-white px-9 py-4 rounded-full font-medium text-base hover:bg-white/10 transition-all duration-200">
+        Find Us
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="absolute bottom-9 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40 scroll-bob">
+    <span class="text-[10px] tracking-[0.2em] uppercase">Scroll</span>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     ABOUT / CONCEPT
+══════════════════════════════════════════ -->
+<section id="about" class="py-28 bg-coffee-50">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+
+      <!-- Image side -->
+      <div class="reveal-l relative">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80"
+               alt="Voyage Cafe interior"
+               class="w-full object-cover"
+               style="height:500px;object-position:center;">
+          <div class="absolute inset-0 bg-gradient-to-t from-coffee-900/50 to-transparent"></div>
+        </div>
+        <!-- Floating stat card -->
+        <div class="absolute -bottom-7 -right-5 md:-right-8 bg-coffee-800 text-white rounded-2xl p-5 shadow-2xl z-10">
+          <div class="font-display text-3xl font-bold text-gold leading-none">4.6★</div>
+          <div class="text-white/65 text-xs mt-1">Google Rating</div>
+          <div class="text-white/45 text-xs">117+ happy guests</div>
+        </div>
+        <!-- Decorative element -->
+        <div class="absolute -top-4 -left-4 w-28 h-28 rounded-2xl border-2 border-gold/30 -z-0"></div>
+      </div>
+
+      <!-- Text side -->
+      <div class="reveal-r">
+        <div class="s-line mb-6"></div>
+        <p class="text-gold text-xs tracking-[0.25em] uppercase mb-4">Our Story</p>
+        <h2 class="font-display font-bold text-coffee-900 leading-tight mb-6"
+            style="font-size:clamp(2rem,4.5vw,3rem)">
+          Where Every Cup<br>Tells a Story
+        </h2>
+        <p class="text-coffee-600 text-lg leading-relaxed mb-5">
+          Nestled in Surin, VOYAGE cafe' is more than just a coffee shop — it's a destination.
+          Whether you're a local seeking your morning ritual or a traveler passing through,
+          we've crafted a space that feels like home away from home.
+        </p>
+        <p class="text-coffee-500 leading-relaxed mb-9">
+          Our menu blends classic coffee traditions with modern creativity, from rich espressos to
+          refreshing non-coffee alternatives and freshly baked pastries — all at prices that welcome everyone.
+        </p>
+        <!-- Feature chips -->
+        <div class="flex flex-wrap gap-3">
+          <span class="bg-coffee-100 text-coffee-800 px-4 py-2 rounded-full text-sm font-medium">☕ Premium Coffee</span>
+          <span class="bg-coffee-100 text-coffee-800 px-4 py-2 rounded-full text-sm font-medium">🌿 Cozy Atmosphere</span>
+          <span class="bg-coffee-100 text-coffee-800 px-4 py-2 rounded-full text-sm font-medium">📍 Surin, Thailand</span>
+          <span class="bg-coffee-100 text-coffee-800 px-4 py-2 rounded-full text-sm font-medium">💰 50–200 THB</span>
+          <span class="bg-coffee-100 text-coffee-800 px-4 py-2 rounded-full text-sm font-medium">🕐 Open Daily</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     MENU
+══════════════════════════════════════════ -->
+<section id="menu" class="py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center mb-14 reveal">
+      <div class="s-line mx-auto mb-6"></div>
+      <p class="text-gold text-xs tracking-[0.25em] uppercase mb-4">Our Menu</p>
+      <h2 class="font-display font-bold text-coffee-900 mb-4"
+          style="font-size:clamp(2rem,4.5vw,3rem)">Crafted with Passion</h2>
+      <p class="text-coffee-500 max-w-xl mx-auto">
+        From single-origin espressos to house-made pastries — every item prepared with love.
+        Prices from ฿50 to ฿200.
+      </p>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12 reveal">
+      <button data-cat="all"        class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-200 bg-coffee-800 text-white"   onclick="filterMenu(this,'all')">All Items</button>
+      <button data-cat="coffee"     class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-200 bg-coffee-100 text-coffee-700 hover:bg-coffee-200" onclick="filterMenu(this,'coffee')">☕ Coffee</button>
+      <button data-cat="non-coffee" class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-200 bg-coffee-100 text-coffee-700 hover:bg-coffee-200" onclick="filterMenu(this,'non-coffee')">🍵 Non-Coffee</button>
+      <button data-cat="bakery"     class="menu-tab px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-200 bg-coffee-100 text-coffee-700 hover:bg-coffee-200" onclick="filterMenu(this,'bakery')">🥐 Bakery</button>
+    </div>
+
+    <!-- Grid -->
+    <div id="menuGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+      <!-- COFFEE -->
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/espresso-shot-coffee/400/300" alt="Espresso" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Espresso</h3>
+              <span class="text-gold font-semibold">฿50</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Bold single shot — pure coffee perfection</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/americano-black-mug/400/300" alt="Americano" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Americano</h3>
+              <span class="text-gold font-semibold">฿55</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Smooth espresso with hot water, hot or iced</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/cafe-latte-art-milk/400/300" alt="Café Latte" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Café Latte</h3>
+              <span class="text-gold font-semibold">฿65</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Creamy espresso with velvety steamed milk</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/cappuccino-foam-white/400/300" alt="Cappuccino" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Cappuccino</h3>
+              <span class="text-gold font-semibold">฿65</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Espresso, steamed milk & thick silky foam</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/thai-iced-coffee-glass/400/300" alt="Thai Iced Coffee" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Thai Iced Coffee</h3>
+              <span class="text-gold font-semibold">฿60</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Classic Thai-style with sweet condensed milk</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/caramel-mocha-coffee/400/300" alt="Caramel Mocha" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Caramel Mocha</h3>
+              <span class="text-gold font-semibold">฿80</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Chocolate, caramel & espresso harmony</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- NON-COFFEE -->
+      <div class="menu-item" data-cat="non-coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/matcha-latte-green/400/300" alt="Matcha Latte" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Matcha Latte</h3>
+              <span class="text-gold font-semibold">฿75</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Ceremonial matcha with steamed oat milk</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="non-coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/tropical-smoothie-mango/400/300" alt="Tropical Smoothie" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Tropical Smoothie</h3>
+              <span class="text-gold font-semibold">฿70</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Mango, passion fruit & fresh coconut blend</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="non-coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/dark-chocolate-hot-drink/400/300" alt="Dark Chocolate" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Dark Chocolate</h3>
+              <span class="text-gold font-semibold">฿70</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Belgian chocolate with rich steamed milk</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="non-coffee">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/iced-herbal-tea-citrus/400/300" alt="Signature Iced Tea" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Signature Iced Tea</h3>
+              <span class="text-gold font-semibold">฿55</span>
+            </div>
+            <p class="text-coffee-400 text-sm">House blend tea with citrus and fresh mint</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BAKERY -->
+      <div class="menu-item" data-cat="bakery">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/butter-croissant-golden/400/300" alt="Butter Croissant" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Butter Croissant</h3>
+              <span class="text-gold font-semibold">฿55</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Fresh-baked, golden-layered flaky pastry</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="bakery">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/chocolate-ganache-cake/400/300" alt="Chocolate Cake" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Chocolate Cake</h3>
+              <span class="text-gold font-semibold">฿80</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Moist Belgian chocolate with ganache glaze</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item" data-cat="bakery">
+        <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-default">
+          <div class="h-44 overflow-hidden">
+            <img src="https://picsum.photos/seed/banana-bread-homemade/400/300" alt="Banana Bread" class="w-full h-full object-cover">
+          </div>
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-1">
+              <h3 class="font-display font-bold text-coffee-900 text-lg">Banana Bread</h3>
+              <span class="text-gold font-semibold">฿65</span>
+            </div>
+            <p class="text-coffee-400 text-sm">Homestyle banana bread with walnut crunch</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /menuGrid -->
+
+    <!-- CTA -->
+    <div class="text-center mt-14 reveal">
+      <p class="text-coffee-400 text-sm mb-5">All items available daily · Open until 7:00 PM</p>
+      <a href="tel:0969627764"
+         class="inline-flex items-center gap-2 bg-coffee-800 text-white px-9 py-4 rounded-full font-semibold hover:bg-coffee-700 transition-all duration-200 hover:-translate-y-0.5 shadow-lg">
+        📞 Reserve a Table · 096-962-7764
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     GALLERY
+══════════════════════════════════════════ -->
+<section id="gallery" class="py-28 bg-coffee-900">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center mb-14 reveal">
+      <div class="s-line mx-auto mb-6"></div>
+      <p class="text-gold text-xs tracking-[0.25em] uppercase mb-4">Gallery</p>
+      <h2 class="font-display font-bold text-white mb-4"
+          style="font-size:clamp(2rem,4.5vw,3rem)">#VoyageMoments</h2>
+      <p class="text-white/50 max-w-md mx-auto">
+        Capture your journey. Share your moments with us on social media.
+      </p>
+    </div>
+
+    <!-- Masonry-like grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 reveal" style="grid-auto-rows:180px;">
+      <div class="gal-wrap col-span-1 row-span-2 overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/coffee-shop-interior-warm/400/600" alt="Cafe interior" class="gal-img w-full h-full object-cover">
+      </div>
+      <div class="gal-wrap overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/latte-art-heart/400/300" alt="Latte art" class="gal-img w-full h-full object-cover">
+      </div>
+      <div class="gal-wrap overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/cafe-window-light/400/300" alt="Cafe window" class="gal-img w-full h-full object-cover">
+      </div>
+      <div class="gal-wrap row-span-2 overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/cafe-outdoor-garden/400/600" alt="Outdoor seating" class="gal-img w-full h-full object-cover">
+      </div>
+      <div class="gal-wrap overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/coffee-beans-roast/400/300" alt="Coffee beans" class="gal-img w-full h-full object-cover">
+      </div>
+      <div class="gal-wrap overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/fresh-pastry-table/400/300" alt="Pastry" class="gal-img w-full h-full object-cover">
+      </div>
+      <div class="gal-wrap col-span-1 row-span-2 overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/iced-coffee-summer-cafe/400/600" alt="Iced coffee" class="gal-img w-full h-full object-cover">
+      </div>
+      <div class="gal-wrap overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/morning-coffee-sunrise/400/300" alt="Morning coffee" class="gal-img w-full h-full object-cover">
+      </div>
+      <div class="gal-wrap overflow-hidden rounded-xl">
+        <img src="https://picsum.photos/seed/cozy-cafe-book/400/300" alt="Cozy corner" class="gal-img w-full h-full object-cover">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     REVIEWS
+══════════════════════════════════════════ -->
+<section id="reviews" class="py-28 bg-coffee-50">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center mb-14 reveal">
+      <div class="s-line mx-auto mb-6"></div>
+      <p class="text-gold text-xs tracking-[0.25em] uppercase mb-4">Testimonials</p>
+      <h2 class="font-display font-bold text-coffee-900 mb-6"
+          style="font-size:clamp(2rem,4.5vw,3rem)">What Our Guests Say</h2>
+      <div class="inline-flex items-center gap-3 bg-white rounded-2xl px-8 py-4 shadow-md">
+        <span class="text-gold text-2xl leading-none">★★★★★</span>
+        <span class="font-display text-3xl font-bold text-coffee-900 leading-none">4.6</span>
+        <div class="w-px h-8 bg-coffee-200"></div>
+        <span class="text-coffee-500 text-sm">117+ Reviews<br><span class="text-coffee-400 text-xs">on Google</span></span>
+      </div>
+    </div>
+
+    <!-- Review cards -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+
+      <!-- Dark highlight card -->
+      <div class="bg-coffee-800 rounded-2xl p-7 shadow-xl">
+        <div class="text-gold mb-4 tracking-tight">★★★★★</div>
+        <p class="font-display italic text-white/80 leading-relaxed mb-7 text-lg">
+          "Best coffee shop in Surin! The Thai iced coffee is unbeatable — a perfect pitstop on my road trip through Isaan."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gold flex items-center justify-center font-bold text-coffee-900">T</div>
+          <div>
+            <div class="font-semibold text-white text-sm">Thanakorn P.</div>
+            <div class="text-white/40 text-xs">via Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-7 shadow-md hover:shadow-xl transition-shadow duration-300">
+        <div class="text-gold mb-4 tracking-tight">★★★★★</div>
+        <p class="font-display italic text-coffee-700 leading-relaxed mb-7 text-lg">
+          "The atmosphere is absolutely gorgeous. I came for a quick coffee and ended up staying 3 hours. The latte art is Instagram-worthy!"
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center font-bold text-amber-700">S</div>
+          <div>
+            <div class="font-semibold text-coffee-900 text-sm">Siriporn K.</div>
+            <div class="text-coffee-400 text-xs">via Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-7 shadow-md hover:shadow-xl transition-shadow duration-300">
+        <div class="text-gold mb-4 tracking-tight">★★★★★</div>
+        <p class="font-display italic text-coffee-700 leading-relaxed mb-7 text-lg">
+          "I was traveling through Surin and stumbled upon VOYAGE. Banana bread + matcha latte — absolutely perfect. Will return!"
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-700">N</div>
+          <div>
+            <div class="font-semibold text-coffee-900 text-sm">Nattaya W.</div>
+            <div class="text-coffee-400 text-xs">via Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-7 shadow-md hover:shadow-xl transition-shadow duration-300">
+        <div class="text-gold mb-4 tracking-tight">★★★★<span class="text-coffee-200">★</span></div>
+        <p class="font-display italic text-coffee-700 leading-relaxed mb-7 text-lg">
+          "Great prices for such quality drinks. The espresso is strong and smooth — exactly what I need to kickstart my morning."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-700">A</div>
+          <div>
+            <div class="font-semibold text-coffee-900 text-sm">Apirak C.</div>
+            <div class="text-coffee-400 text-xs">via Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-7 shadow-md hover:shadow-xl transition-shadow duration-300">
+        <div class="text-gold mb-4 tracking-tight">★★★★★</div>
+        <p class="font-display italic text-coffee-700 leading-relaxed mb-7 text-lg">
+          "Such a hidden gem! The staff is incredibly warm and friendly. Feels like a mini-vacation every time I visit."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center font-bold text-rose-700">P</div>
+          <div>
+            <div class="font-semibold text-coffee-900 text-sm">Pornthip L.</div>
+            <div class="text-coffee-400 text-xs">via Google Reviews</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-7 shadow-md hover:shadow-xl transition-shadow duration-300">
+        <div class="text-gold mb-4 tracking-tight">★★★★★</div>
+        <p class="font-display italic text-coffee-700 leading-relaxed mb-7 text-lg">
+          "The decor is beautiful and so photogenic. The chocolate cake pairs perfectly with Americano. My go-to in Surin!"
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center font-bold text-purple-700">W</div>
+          <div>
+            <div class="font-semibold text-coffee-900 text-sm">Wanida S.</div>
+            <div class="text-coffee-400 text-xs">via Google Reviews</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     CONTACT & LOCATION
+══════════════════════════════════════════ -->
+<section id="contact" class="py-28 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <!-- Header -->
+    <div class="text-center mb-16 reveal">
+      <div class="s-line mx-auto mb-6"></div>
+      <p class="text-gold text-xs tracking-[0.25em] uppercase mb-4">Find Us</p>
+      <h2 class="font-display font-bold text-coffee-900"
+          style="font-size:clamp(2rem,4.5vw,3rem)">Come Visit Us</h2>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
+
+      <!-- Info column -->
+      <div class="space-y-5 reveal-l">
+
+        <!-- Hours -->
+        <div class="bg-coffee-50 rounded-2xl p-6 flex gap-4">
+          <div class="w-11 h-11 bg-gold/15 rounded-full flex items-center justify-center flex-shrink-0 text-xl">🕐</div>
+          <div>
+            <h3 class="font-display font-bold text-coffee-900 text-lg mb-3">Operating Hours</h3>
+            <div class="space-y-1.5 text-coffee-600 text-sm">
+              <div class="flex justify-between gap-8">
+                <span>Monday – Friday</span><span class="font-medium">Open – 7:00 PM</span>
+              </div>
+              <div class="flex justify-between gap-8">
+                <span>Saturday – Sunday</span><span class="font-medium">Open – 7:00 PM</span>
+              </div>
+            </div>
+            <div class="mt-4 pt-3 border-t border-coffee-200">
+              <span class="inline-flex items-center gap-2 text-green-600 text-sm font-medium">
+                <span class="w-2 h-2 bg-green-500 rounded-full pulse-dot"></span>
+                Open Daily · Closes at 7:00 PM
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="bg-coffee-50 rounded-2xl p-6 flex gap-4">
+          <div class="w-11 h-11 bg-gold/15 rounded-full flex items-center justify-center flex-shrink-0 text-xl">📍</div>
+          <div>
+            <h3 class="font-display font-bold text-coffee-900 text-lg mb-2">Location</h3>
+            <p class="text-coffee-700 text-sm leading-relaxed mb-1">
+              188 Ban Khok Krapho, Nok Mueang,<br>
+              Mueang Surin District, Surin 32000
+            </p>
+            <p class="text-coffee-400 text-xs">
+              บ้านโคกกระเพอ 188 ต.นอกเมือง อ.เมืองสุรินทร์ จ.สุรินทร์
+            </p>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="bg-coffee-50 rounded-2xl p-6 flex gap-4">
+          <div class="w-11 h-11 bg-gold/15 rounded-full flex items-center justify-center flex-shrink-0 text-xl">📞</div>
+          <div>
+            <h3 class="font-display font-bold text-coffee-900 text-lg mb-2">Phone</h3>
+            <a href="tel:0969627764" class="text-coffee-800 text-xl font-semibold hover:text-gold transition-colors duration-200">096-962-7764</a>
+            <p class="text-coffee-400 text-xs mt-1">Call us to reserve a table or enquire about our menu</p>
+          </div>
+        </div>
+
+        <!-- Pricing -->
+        <div class="bg-gold/10 border border-gold/30 rounded-2xl p-5 flex items-center gap-4">
+          <span class="text-2xl flex-shrink-0">💰</span>
+          <div>
+            <h3 class="font-display font-bold text-coffee-900">Friendly Pricing</h3>
+            <p class="text-coffee-600 text-sm">Starting ฿50 · Maximum ฿200 per person</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map column -->
+      <div class="reveal-r">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl" style="height:380px;">
+          <img src="https://picsum.photos/seed/surin-thailand-aerial/800/600"
+               alt="Map placeholder" class="w-full h-full object-cover absolute inset-0">
+          <div class="absolute inset-0 bg-coffee-900/30"></div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-7 text-center shadow-xl max-w-xs">
+              <div class="text-5xl mb-3">📍</div>
+              <h3 class="font-display font-bold text-coffee-900 text-xl mb-1">VOYAGE cafe'</h3>
+              <p class="text-coffee-500 text-sm mb-1">188 Ban Khok Krapho</p>
+              <p class="text-coffee-400 text-xs mb-5">Surin 32000, Thailand</p>
+              <a href="https://maps.google.com/?q=188+Ban+Khok+Krapho+Nok+Mueang+Surin+Thailand"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="inline-block bg-coffee-800 text-white text-sm px-6 py-3 rounded-full font-medium hover:bg-coffee-700 transition-colors duration-200">
+                Open in Google Maps →
+              </a>
+            </div>
+          </div>
+        </div>
+        <!-- Action buttons -->
+        <div class="grid grid-cols-2 gap-3 mt-4">
+          <a href="tel:0969627764"
+             class="flex items-center justify-center gap-2 bg-coffee-800 text-white py-3.5 rounded-xl font-medium text-sm hover:bg-coffee-700 transition-colors duration-200">
+            📞 Call Us
+          </a>
+          <a href="https://maps.google.com/?q=188+Ban+Khok+Krapho+Nok+Mueang+Surin+Thailand"
+             target="_blank" rel="noopener noreferrer"
+             class="flex items-center justify-center gap-2 bg-gold text-coffee-900 py-3.5 rounded-xl font-medium text-sm hover:bg-amber-400 transition-colors duration-200">
+            🗺️ Get Directions
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════ -->
+<footer class="bg-coffee-900 text-white pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-4 gap-10 mb-12">
+
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <a href="#home" class="inline-flex items-center gap-3 mb-5">
+          <div class="w-12 h-12 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
+            <span class="font-display font-black text-coffee-900 text-xl">V</span>
+          </div>
+          <div>
+            <div class="font-display font-bold text-2xl tracking-widest">VOYAGE</div>
+            <div class="text-gold text-xs tracking-[0.3em]">cafe'</div>
+          </div>
+        </a>
+        <p class="text-white/50 leading-relaxed max-w-xs text-sm mb-7">
+          A cozy &amp; modern coffee shop in the heart of Surin. Your daily journey starts here —
+          one perfect cup at a time.
+        </p>
+        <!-- Social icons -->
+        <div class="flex gap-3">
+          <a href="#" aria-label="Facebook"
+             class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-white/60 hover:bg-gold hover:text-coffee-900 transition-all duration-200 text-sm font-semibold">f</a>
+          <a href="#" aria-label="Instagram"
+             class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-white/60 hover:bg-gold hover:text-coffee-900 transition-all duration-200 text-sm font-semibold">ig</a>
+          <a href="#" aria-label="Line"
+             class="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center text-white/60 hover:bg-gold hover:text-coffee-900 transition-all duration-200 text-sm font-semibold">L</a>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <h4 class="font-semibold text-sm tracking-widest uppercase text-white/80 mb-5">Quick Links</h4>
+        <ul class="space-y-3">
+          <li><a href="#home"    class="text-white/50 hover:text-gold transition-colors duration-200 text-sm">Home</a></li>
+          <li><a href="#menu"    class="text-white/50 hover:text-gold transition-colors duration-200 text-sm">Menu</a></li>
+          <li><a href="#gallery" class="text-white/50 hover:text-gold transition-colors duration-200 text-sm">Gallery</a></li>
+          <li><a href="#reviews" class="text-white/50 hover:text-gold transition-colors duration-200 text-sm">Reviews</a></li>
+          <li><a href="#contact" class="text-white/50 hover:text-gold transition-colors duration-200 text-sm">Find Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact info -->
+      <div>
+        <h4 class="font-semibold text-sm tracking-widest uppercase text-white/80 mb-5">Contact</h4>
+        <div class="space-y-3 text-sm">
+          <div>
+            <a href="tel:0969627764" class="text-white/50 hover:text-gold transition-colors duration-200">096-962-7764</a>
+          </div>
+          <div class="text-white/50 leading-relaxed">
+            188 Ban Khok Krapho,<br>Surin 32000, Thailand
+          </div>
+          <div>
+            <span class="inline-flex items-center gap-2 text-green-400 text-sm">
+              <span class="w-1.5 h-1.5 bg-green-400 rounded-full pulse-dot"></span>
+              Open Daily until 7 PM
+            </span>
+          </div>
+          <div class="text-white/50">
+            ฿50 – ฿200 per person
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <p class="text-white/30 text-xs">© 2024 VOYAGE cafe'. All rights reserved. Surin, Thailand.</p>
+      <div class="flex items-center gap-2 text-xs">
+        <span class="text-gold">★★★★★</span>
+        <span class="text-white/30">4.6 / 5 · 117+ Google Reviews</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+  // ── Navbar scroll ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // ── Mobile menu ──
+  const burgerBtn   = document.getElementById('burgerBtn');
+  const mobileMenu  = document.getElementById('mobileMenu');
+  const iconOpen    = document.getElementById('iconOpen');
+  const iconClose   = document.getElementById('iconClose');
+
+  burgerBtn.addEventListener('click', () => {
+    const isHidden = mobileMenu.classList.toggle('hidden');
+    iconOpen.classList.toggle('hidden',  !isHidden);
+    iconClose.classList.toggle('hidden', isHidden);
+  });
+
+  function closeMob() {
+    mobileMenu.classList.add('hidden');
+    iconOpen.classList.remove('hidden');
+    iconClose.classList.add('hidden');
+  }
+
+  // ── Smooth scroll for all internal anchors ──
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.pageYOffset - 76;
+      window.scrollTo({ top, behavior: 'smooth' });
+      closeMob();
+    });
+  });
+
+  // ── Scroll-reveal (Intersection Observer) ──
+  const revealEls = document.querySelectorAll('.reveal, .reveal-l, .reveal-r');
+  const ioReveal  = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in'), i * 80);
+        ioReveal.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => ioReveal.observe(el));
+
+  // ── Menu filter ──
+  function filterMenu(btn, cat) {
+    // Update tabs
+    document.querySelectorAll('.menu-tab').forEach(t => {
+      t.classList.remove('bg-coffee-800', 'text-white');
+      t.classList.add('bg-coffee-100', 'text-coffee-700');
+    });
+    btn.classList.remove('bg-coffee-100', 'text-coffee-700');
+    btn.classList.add('bg-coffee-800', 'text-white');
+
+    // Filter items with a fade
+    document.querySelectorAll('.menu-item').forEach(item => {
+      const match = cat === 'all' || item.dataset.cat === cat;
+      item.style.transition = 'opacity 0.25s, transform 0.25s';
+      if (match) {
+        item.style.display = 'block';
+        requestAnimationFrame(() => {
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+        });
+      } else {
+        item.style.opacity  = '0';
+        item.style.transform = 'translateY(8px)';
+        setTimeout(() => { item.style.display = 'none'; }, 250);
+      }
+    });
+  }
+</script>
+</body>
+</html>

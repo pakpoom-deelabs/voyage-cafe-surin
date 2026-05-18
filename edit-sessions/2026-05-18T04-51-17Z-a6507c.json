@@ -12,7 +12,9 @@
     }
   ],
   "actor": "team",
-  "status": "applying",
+  "status": "applied",
   "created_at": "2026-05-18T04:51:17.856Z",
-  "started_at": "2026-05-18T04:51:17Z"
+  "started_at": "2026-05-18T04:51:17Z",
+  "applied_at": "2026-05-18T04:51:45Z",
+  "commit": "9198aeaf6955d54056ac881cb205e22ba99537ea"
 }

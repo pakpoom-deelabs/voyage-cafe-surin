@@ -1,0 +1,18 @@
+{
+  "id": "2026-05-18T04-51-17Z-a6507c",
+  "pins": [
+    {
+      "id": "644b0f54-782f-4241-b612-a73cb83b62ac",
+      "x": 0.90390625,
+      "y": 0.06944444444444445,
+      "region": "header",
+      "regionLabel": "~header",
+      "text": "ตัดส่วนนี้ออก",
+      "status": "pending"
+    }
+  ],
+  "actor": "team",
+  "status": "applying",
+  "created_at": "2026-05-18T04:51:17.856Z",
+  "started_at": "2026-05-18T04:51:17Z"
+}

@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1779079878499,
+  "projectRoot": "/Users/pakpoom/Documents/Claude/Projects/Claude Automation/web-builder/data/sites/voyage-cafe-surin",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "edit-sessions": {
+      "path": "edit-sessions",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1779079878491,
+      "keyFiles": [
+        "2026-05-18T04-51-17Z-a6507c.json"
+      ]
+    },
+    "variants": {
+      "path": "variants",
+      "purpose": null,
+      "fileCount": 5,
+      "lastAccessed": 1779079878492,
+      "keyFiles": [
+        "v1.html",
+        "v2.html",
+        "v3.html",
+        "v4.html",
+        "v5.html"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "index.html",
+      "accessCount": 3,
+      "lastAccessed": 1779079900062,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

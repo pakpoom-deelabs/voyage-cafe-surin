@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VOYAGE cafe' — Surin's Finest Coffee</title>
+  <meta name="description" content="VOYAGE cafe' — Cozy & Modern Coffee Shop in Surin, Thailand. Open Daily until 7 PM. From 45฿." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            espresso: '#1A0F08',
+            'espresso-light': '#261508',
+            gold: '#C9A96E',
+            'gold-light': '#DFC08A',
+            'gold-dim': '#8A6E3E',
+            cream: '#F0E0C8',
+            'cream-dim': '#BFA98A',
+            forest: '#3D6B4F',
+            'forest-light': '#4E8A65',
+          },
+          fontFamily: {
+            playfair: ['"Playfair Display"', 'Georgia', 'serif'],
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ── Base ── */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #1A0F08;
+      color: #F0E0C8;
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1A0F08; }
+    ::-webkit-scrollbar-thumb { background: #C9A96E; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #DFC08A; }
+
+    /* ── Selection ── */
+    ::selection { background: #C9A96E33; color: #F0E0C8; }
+
+    /* ── Typography helpers ── */
+    .font-playfair { font-family: 'Playfair Display', Georgia, serif; }
+    .font-inter    { font-family: 'Inter', system-ui, sans-serif; }
+
+    /* ── Glassmorphism nav ── */
+    .glass-nav {
+      background: rgba(26, 15, 8, 0.75);
+      backdrop-filter: blur(18px) saturate(1.4);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      border-bottom: 1px solid rgba(201, 169, 110, 0.15);
+    }
+
+    /* ── Gold underline hover ── */
+    .nav-link {
+      position: relative;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #BFA98A;
+      transition: color 0.3s ease;
+      padding-bottom: 4px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: #C9A96E;
+      transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .nav-link:hover { color: #C9A96E; }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ── Hero split ── */
+    .hero-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+    @media (max-width: 767px) {
+      .hero-split {
+        grid-template-columns: 1fr;
+        position: relative;
+        min-height: 100svh;
+      }
+    }
+
+    /* ── Diagonal clip-path dividers ── */
+    .clip-diagonal-top {
+      clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 100%);
+    }
+    .clip-diagonal-bottom {
+      clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+    }
+    .clip-section {
+      clip-path: polygon(0 4%, 100% 0, 100% 96%, 0 100%);
+    }
+    @media (max-width: 767px) {
+      .clip-diagonal-top  { clip-path: polygon(0 0, 100% 2%, 100% 100%, 0 100%); }
+      .clip-diagonal-bottom { clip-path: polygon(0 0, 100% 0, 100% 98%, 0 100%); }
+      .clip-section { clip-path: polygon(0 2%, 100% 0, 100% 98%, 0 100%); }
+    }
+
+    /* ── Stats bar separator ── */
+    .stat-sep {
+      width: 1px;
+      height: 40px;
+      background: rgba(201, 169, 110, 0.3);
+    }
+
+    /* ── Menu card hover ── */
+    .menu-card {
+      background: #261508;
+      border: 1px solid rgba(201, 169, 110, 0.12);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.35s ease,
+                  box-shadow 0.35s ease;
+    }
+    .menu-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201, 169, 110, 0.6);
+      box-shadow: 0 16px 40px rgba(201, 169, 110, 0.12);
+    }
+    .menu-card img {
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .menu-card:hover img { transform: scale(1.05); }
+
+    /* ── Gallery ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 767px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+    .gallery-item:nth-child(2) { aspect-ratio: 3/5; }
+    .gallery-item:nth-child(5) { aspect-ratio: 4/3; }
+
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.08); }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(201, 169, 110, 0.45) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+    /* ── Tab system ── */
+    .tab-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #8A6E3E;
+      padding: 10px 28px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.3s ease, border-color 0.3s ease;
+      white-space: nowrap;
+      cursor: pointer;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .tab-btn.active {
+      color: #C9A96E;
+      border-bottom-color: #C9A96E;
+    }
+    .tab-btn:hover { color: #C9A96E; }
+
+    .tab-panel { display: none; animation: fadeTab 0.4s ease forwards; }
+    .tab-panel.active { display: grid; }
+
+    @keyframes fadeTab {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Testimonial cards ── */
+    .review-card {
+      background: #261508;
+      border: 1px solid rgba(201, 169, 110, 0.12);
+      border-radius: 4px;
+      padding: 2rem;
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+    .review-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201, 169, 110, 0.4);
+    }
+
+    /* ── Scroll animations ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.delay-1 { transition-delay: 0.1s; }
+    .fade-up.delay-2 { transition-delay: 0.2s; }
+    .fade-up.delay-3 { transition-delay: 0.3s; }
+    .fade-up.delay-4 { transition-delay: 0.4s; }
+    .fade-up.delay-5 { transition-delay: 0.5s; }
+
+    /* ── Hero text entrance ── */
+    @keyframes heroSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-anim-1 { animation: heroSlideUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.2s both; }
+    .hero-anim-2 { animation: heroSlideUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.45s both; }
+    .hero-anim-3 { animation: heroSlideUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.65s both; }
+    .hero-anim-4 { animation: heroSlideUp 0.9s cubic-bezier(0.4,0,0.2,1) 0.85s both; }
+    .hero-anim-5 { animation: heroSlideUp 0.9s cubic-bezier(0.4,0,0.2,1) 1.05s both; }
+
+    /* ── Gold shimmer on section numbers ── */
+    @keyframes shimmer {
+      0%, 100% { opacity: 0.25; }
+      50%       { opacity: 0.6; }
+    }
+    .section-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 9rem;
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(201, 169, 110, 0.18);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+
+    /* ── Button styles ── */
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #C9A96E;
+      color: #1A0F08;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .btn-gold:hover {
+      background: #DFC08A;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201, 169, 110, 0.35);
+    }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: #C9A96E;
+      border: 1px solid #C9A96E;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 13px 32px;
+      transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(201, 169, 110, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* ── Gold line decorator ── */
+    .gold-line {
+      display: inline-block;
+      width: 60px; height: 1px;
+      background: #C9A96E;
+      vertical-align: middle;
+      margin-right: 16px;
+    }
+
+    /* ── Map placeholder ── */
+    .map-placeholder {
+      background: #1A0F08;
+      border: 1px solid rgba(201, 169, 110, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(0deg, rgba(201,169,110,0.04) 0px, rgba(201,169,110,0.04) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(90deg, rgba(201,169,110,0.04) 0px, rgba(201,169,110,0.04) 1px, transparent 1px, transparent 40px);
+    }
+
+    /* ── Mobile menu ── */
+    #mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    #mobile-menu.open { max-height: 400px; }
+
+    /* ── Hamburger lines ── */
+    .ham-line {
+      display: block;
+      width: 22px; height: 1.5px;
+      background: #C9A96E;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .ham-open .ham-line:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .ham-open .ham-line:nth-child(2) { opacity: 0; }
+    .ham-open .ham-line:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ── Quote decoration ── */
+    .quote-deco {
+      font-family: 'Playfair Display', serif;
+      font-size: 14rem;
+      line-height: 0.7;
+      color: rgba(201, 169, 110, 0.07);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* ── Hours table ── */
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(201, 169, 110, 0.1);
+      font-size: 0.875rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+
+    /* ── Image overlay stack ── */
+    .img-stack {
+      position: relative;
+      height: 420px;
+    }
+    .img-stack .img-back {
+      position: absolute;
+      top: 0; right: 0;
+      width: 80%; height: 320px;
+      object-fit: cover;
+    }
+    .img-stack .img-front {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 65%; height: 260px;
+      object-fit: cover;
+      border: 4px solid #1A0F08;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .img-stack .img-label {
+      position: absolute;
+      bottom: 24px; right: 0;
+      background: #C9A96E;
+      color: #1A0F08;
+      padding: 8px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── Social icon hover ── */
+    .social-icon {
+      color: #8A6E3E;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .social-icon:hover {
+      color: #C9A96E;
+      transform: translateY(-3px);
+    }
+
+    /* ── Overline label ── */
+    .overline {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #C9A96E;
+    }
+
+    /* ── Section title style ── */
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #C9A96E;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- NAVIGATION                                          -->
+<!-- ═══════════════════════════════════════════════════ -->
+<nav id="navbar" class="glass-nav fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex items-center justify-between h-16 lg:h-20">
+
+      <!-- Logo -->
+      <a href="#home" class="flex items-baseline gap-2 flex-shrink-0">
+        <span class="font-playfair text-xl lg:text-2xl font-bold text-gold tracking-wider">VOYAGE</span>
+        <span class="font-inter text-xs text-cream-dim tracking-widest">cafe'</span>
+      </a>
+
+      <!-- Desktop nav links -->
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#home"         class="nav-link">Home</a>
+        <a href="#menu"         class="nav-link">Menu</a>
+        <a href="#about"        class="nav-link">About</a>
+        <a href="#gallery"      class="nav-link">Gallery</a>
+        <a href="#contact"      class="nav-link">Find Us</a>
+      </div>
+
+      <!-- CTA phone -->
+      <a href="tel:0969627764" class="hidden md:inline-flex items-center gap-2 btn-outline text-xs px-5 py-2.5">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.67 19.79 19.79 0 01.07 2 2 2 0 012.07 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/>
+        </svg>
+        096-962-7764
+      </a>
+
+      <!-- Hamburger -->
+      <button id="ham-btn" class="md:hidden flex flex-col gap-[5px] p-2" aria-label="Toggle menu">
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+        <span class="ham-line"></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu">
+      <div class="flex flex-col py-4 border-t border-gold/10">
+        <a href="#home"    class="nav-link py-3 px-2 text-sm">Home</a>
+        <a href="#menu"    class="nav-link py-3 px-2 text-sm">Menu</a>
+        <a href="#about"   class="nav-link py-3 px-2 text-sm">About</a>
+        <a href="#gallery" class="nav-link py-3 px-2 text-sm">Gallery</a>
+        <a href="#contact" class="nav-link py-3 px-2 text-sm">Find Us</a>
+        <a href="tel:0969627764" class="btn-outline mt-4 self-start text-xs px-5 py-3">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.67 19.79 19.79 0 01.07 2 2 2 0 012.07 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/>
+          </svg>
+          096-962-7764
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- HERO — SPLIT SCREEN                                 -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section id="home" class="hero-split relative">
+
+  <!-- LEFT: Editorial Text -->
+  <div class="relative flex flex-col justify-center px-8 md:px-12 lg:px-20 pt-28 pb-16 md:py-0 bg-espresso z-10">
+    <!-- Decorative number -->
+    <div class="absolute -bottom-8 -left-4 section-number opacity-30 pointer-events-none select-none hidden lg:block">I</div>
+
+    <div class="max-w-lg">
+      <!-- Overline -->
+      <div class="hero-anim-1 overline mb-6 flex items-center gap-3">
+        <span class="inline-block w-8 h-px bg-gold"></span>
+        Surin's Finest Since Forever
+      </div>
+
+      <!-- Headline -->
+      <h1 class="hero-anim-2 font-playfair leading-[1.08] mb-2">
+        <span class="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-cream">Start Your</span>
+        <span class="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-cream">Daily</span>
+        <span class="block text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-cream">Journey</span>
+      </h1>
+      <h2 class="hero-anim-3 font-playfair italic text-3xl md:text-4xl lg:text-5xl font-medium text-gold mb-8 leading-tight">
+        with Premium Coffee.
+      </h2>
+
+      <!-- Rating badge -->
+      <div class="hero-anim-4 inline-flex items-center gap-3 mb-10 px-4 py-3 border border-gold/25 bg-gold/5">
+        <div class="flex gap-0.5">
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span class="font-inter text-sm font-semibold text-gold">4.6</span>
+        <span class="font-inter text-xs text-cream-dim">· 117+ Reviews on Google</span>
+      </div>
+
+      <!-- CTAs -->
+      <div class="hero-anim-5 flex flex-wrap gap-4">
+        <a href="#menu" class="btn-gold">
+          Explore Menu
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#about" class="btn-outline">Our Story</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Image -->
+  <div class="relative overflow-hidden md:block" style="min-height: 400px;">
+    <img
+      src="https://picsum.photos/seed/coffee-shop-interior/1200/900"
+      alt="VOYAGE cafe interior"
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="eager"
+    />
+    <!-- Dark gradient overlay on left edge for blending -->
+    <div class="absolute inset-0 bg-gradient-to-r from-espresso via-espresso/20 to-transparent pointer-events-none"></div>
+    <!-- Bottom info tag -->
+    <div class="absolute bottom-8 right-8 bg-espresso/80 backdrop-blur-sm border border-gold/20 px-5 py-3 hidden md:block">
+      <div class="font-inter text-xs text-cream-dim uppercase tracking-widest mb-1">Location</div>
+      <div class="font-playfair text-sm text-cream">Surin, Thailand</div>
+    </div>
+  </div>
+
+  <!-- Mobile: overlay hero image -->
+  <div class="md:hidden absolute inset-0 -z-10">
+    <img src="https://picsum.photos/seed/coffee-shop-interior/1200/900" alt="VOYAGE cafe" class="w-full h-full object-cover opacity-20" />
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- STATS BAR                                           -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="bg-espresso-light border-y border-gold/10">
+  <div class="max-w-5xl mx-auto px-6 py-8">
+    <div class="flex flex-wrap items-center justify-center gap-6 md:gap-0">
+
+      <div class="flex flex-col items-center gap-1 px-8 md:flex-1">
+        <span class="font-playfair text-3xl font-bold text-gold">117+</span>
+        <span class="font-inter text-xs text-cream-dim uppercase tracking-widest">Google Reviews</span>
+      </div>
+      <div class="stat-sep hidden md:block"></div>
+
+      <div class="flex flex-col items-center gap-1 px-8 md:flex-1">
+        <span class="font-playfair text-3xl font-bold text-gold">4.6 ★</span>
+        <span class="font-inter text-xs text-cream-dim uppercase tracking-widest">Star Rating</span>
+      </div>
+      <div class="stat-sep hidden md:block"></div>
+
+      <div class="flex flex-col items-center gap-1 px-8 md:flex-1">
+        <span class="font-playfair text-3xl font-bold text-gold">Daily</span>
+        <span class="font-inter text-xs text-cream-dim uppercase tracking-widest">Open Every Day</span>
+      </div>
+      <div class="stat-sep hidden md:block"></div>
+
+      <div class="flex flex-col items-center gap-1 px-8 md:flex-1">
+        <span class="font-playfair text-3xl font-bold text-gold">&lt;200฿</span>
+        <span class="font-inter text-xs text-cream-dim uppercase tracking-widest">Price Per Person</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- ABOUT / CONCEPT                                     -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section id="about" class="clip-diagonal-top relative py-28 md:py-40 bg-espresso-light" style="margin-top: -2px;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-center">
+
+      <!-- Left: editorial quote + body -->
+      <div class="fade-up">
+        <div class="overline mb-8">The Concept</div>
+
+        <!-- Large blockquote -->
+        <blockquote class="font-playfair italic text-2xl md:text-3xl lg:text-4xl text-cream leading-relaxed mb-8 border-l-2 border-gold pl-6">
+          "Every cup is a passport to somewhere beautiful…"
+        </blockquote>
+
+        <p class="font-inter text-sm text-cream-dim leading-relaxed mb-5">
+          Tucked into the quiet neighbourhood of Ban Khok Krapho on the edge of Surin city, VOYAGE cafe' was born from a simple conviction: that great coffee should feel like an escape. Whether you're a local seeking a morning ritual or a traveller passing through Thailand's northeastern heartland, this is your perfectly brewed pause.
+        </p>
+        <p class="font-inter text-sm text-cream-dim leading-relaxed mb-10">
+          The space blends raw textures with considered light — exposed concrete softened by warm Edison glow, curated playlists drifting low, and a menu priced for everyone from students to explorers. Come once and you'll make it a habit.
+        </p>
+
+        <!-- Mini info row -->
+        <div class="flex flex-wrap gap-6">
+          <div>
+            <div class="font-inter text-xs text-gold uppercase tracking-widest mb-1">Hours</div>
+            <div class="font-inter text-sm text-cream">Open Daily · Until 7:00 PM</div>
+          </div>
+          <div class="w-px bg-gold/20 self-stretch"></div>
+          <div>
+            <div class="font-inter text-xs text-gold uppercase tracking-widest mb-1">Location</div>
+            <div class="font-inter text-sm text-cream">Surin, Thailand</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: stacked images -->
+      <div class="fade-up delay-2 img-stack">
+        <img
+          src="https://picsum.photos/seed/cafe-cozy/600/400"
+          alt="VOYAGE cafe ambience"
+          class="img-back"
+          loading="lazy"
+        />
+        <img
+          src="https://picsum.photos/seed/latte-art/600/400"
+          alt="Latte art at VOYAGE"
+          class="img-front"
+          loading="lazy"
+        />
+        <div class="img-label">Handcrafted Daily</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- MENU                                                -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section id="menu" class="clip-section relative py-28 md:py-40 bg-espresso" style="margin-top: -2px;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <!-- Section header -->
+    <div class="flex items-end justify-between mb-14 fade-up">
+      <div>
+        <div class="flex items-center gap-4 mb-4">
+          <span class="section-label">01 —</span>
+          <div class="h-px flex-1 max-w-xs bg-gold/20"></div>
+        </div>
+        <h2 class="font-playfair text-5xl md:text-6xl lg:text-7xl font-bold text-cream">Our Menu</h2>
+      </div>
+      <div class="hidden md:block text-right">
+        <div class="font-inter text-xs text-cream-dim uppercase tracking-widest">Price from</div>
+        <div class="font-playfair text-2xl text-gold font-bold">45 ฿</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-0 border-b border-gold/15 mb-10 overflow-x-auto fade-up delay-1">
+      <button class="tab-btn active" data-tab="coffee">Coffee</button>
+      <button class="tab-btn"        data-tab="non-coffee">Non-Coffee</button>
+      <button class="tab-btn"        data-tab="bakery">Bakery</button>
+    </div>
+
+    <!-- Coffee tab -->
+    <div id="tab-coffee" class="tab-panel active grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 fade-up delay-2">
+      <!-- Cards generated below -->
+    </div>
+
+    <!-- Non-Coffee tab -->
+    <div id="tab-non-coffee" class="tab-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6"></div>
+
+    <!-- Bakery tab -->
+    <div id="tab-bakery" class="tab-panel grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6"></div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- GALLERY                                             -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section id="gallery" class="clip-diagonal-top relative py-28 md:py-40 bg-espresso-light" style="margin-top: -2px;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <!-- Header -->
+    <div class="mb-14 fade-up">
+      <div class="flex items-center gap-4 mb-4">
+        <span class="section-label">02 —</span>
+        <div class="h-px flex-1 max-w-xs bg-gold/20"></div>
+      </div>
+      <h2 class="font-playfair text-5xl md:text-6xl lg:text-7xl font-bold text-cream">Gallery</h2>
+    </div>
+
+    <div class="gallery-grid fade-up delay-1">
+      <div class="gallery-item">
+        <img src="https://picsum.photos/seed/barista/600/800" alt="Barista at work" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://picsum.photos/seed/coffee-beans/600/900" alt="Coffee beans" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://picsum.photos/seed/cafe-morning/600/800" alt="Cafe morning" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://picsum.photos/seed/espresso/600/600" alt="Espresso pour" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://picsum.photos/seed/pastry/600/500" alt="Fresh pastries" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://picsum.photos/seed/cafe-ambiance/600/800" alt="Cafe ambiance" loading="lazy" />
+        <div class="gallery-overlay"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- TESTIMONIALS                                        -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section class="clip-section relative py-28 md:py-40 bg-espresso overflow-hidden" style="margin-top: -2px;">
+  <!-- Decorative quote marks -->
+  <div class="absolute -top-8 -left-6 quote-deco select-none pointer-events-none">"</div>
+  <div class="absolute -bottom-8 -right-6 quote-deco select-none pointer-events-none" style="transform:scaleX(-1)">"</div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+
+    <!-- Header -->
+    <div class="mb-14 fade-up">
+      <div class="flex items-center gap-4 mb-4">
+        <span class="section-label">03 —</span>
+        <div class="h-px flex-1 max-w-xs bg-gold/20"></div>
+      </div>
+      <h2 class="font-playfair text-5xl md:text-6xl lg:text-7xl font-bold text-cream">Guest Voices</h2>
+    </div>
+
+    <!-- Review cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <div class="review-card fade-up delay-1">
+        <div class="flex gap-1 mb-5">
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="font-inter text-sm text-cream-dim leading-relaxed mb-6 italic">
+          "Absolutely love the vibe here. Best coffee in Surin by far! The atmosphere is perfect for both work and catching up with friends."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center">
+            <span class="font-inter text-xs font-bold text-gold">N</span>
+          </div>
+          <div>
+            <div class="font-inter text-xs font-semibold text-cream">Narut K.</div>
+            <div class="font-inter text-xs text-cream-dim/60">Google Review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-up delay-2">
+        <div class="flex gap-1 mb-5">
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="font-inter text-sm text-cream-dim leading-relaxed mb-6 italic">
+          "Perfect place to work or relax. The cold brew is exceptional and the staff is so friendly. Prices are very reasonable for the quality."
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center">
+            <span class="font-inter text-xs font-bold text-gold">S</span>
+          </div>
+          <div>
+            <div class="font-inter text-xs font-semibold text-cream">Siriporn M.</div>
+            <div class="font-inter text-xs text-cream-dim/60">Google Review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-up delay-3">
+        <div class="flex gap-1 mb-5">
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-4 h-4 text-gold/40 fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <p class="font-inter text-sm text-cream-dim leading-relaxed mb-6 italic">
+          "Found this gem while passing through Surin. The latte art was Instagram-worthy and the price is very reasonable. Will definitely return!"
+        </p>
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center">
+            <span class="font-inter text-xs font-bold text-gold">T</span>
+          </div>
+          <div>
+            <div class="font-inter text-xs font-semibold text-cream">Thanakorn P.</div>
+            <div class="font-inter text-xs text-cream-dim/60">Google Review</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Google rating callout -->
+    <div class="mt-14 flex flex-col md:flex-row items-center justify-center gap-6 fade-up delay-4">
+      <div class="font-playfair text-5xl font-bold text-gold">4.6</div>
+      <div class="flex flex-col gap-1">
+        <div class="flex gap-1">
+          <svg class="w-5 h-5 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-5 h-5 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-5 h-5 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-5 h-5 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="w-5 h-5 text-gold fill-current" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="font-inter text-xs text-cream-dim uppercase tracking-widest">Based on 117+ Google Reviews</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- CONTACT & FIND US                                   -->
+<!-- ═══════════════════════════════════════════════════ -->
+<section id="contact" class="clip-diagonal-top relative py-28 md:py-40 bg-espresso-light" style="margin-top: -2px;">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <!-- Header -->
+    <div class="mb-14 fade-up">
+      <div class="flex items-center gap-4 mb-4">
+        <span class="section-label">04 —</span>
+        <div class="h-px flex-1 max-w-xs bg-gold/20"></div>
+      </div>
+      <h2 class="font-playfair text-5xl md:text-6xl lg:text-7xl font-bold text-cream">Find Us</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+
+      <!-- Left: contact info -->
+      <div class="fade-up delay-1 space-y-10">
+
+        <!-- Compass SVG decoration -->
+        <div class="text-gold/20 mb-6">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" stroke="#C9A96E" stroke-width="1" opacity="0.4"/>
+            <circle cx="32" cy="32" r="22" stroke="#C9A96E" stroke-width="0.5" opacity="0.3"/>
+            <polygon points="32,8 35,32 32,56 29,32" fill="#C9A96E" opacity="0.7"/>
+            <polygon points="8,32 32,29 56,32 32,35" fill="#C9A96E" opacity="0.3"/>
+            <circle cx="32" cy="32" r="3" fill="#C9A96E"/>
+            <text x="32" y="6" text-anchor="middle" font-size="6" fill="#C9A96E" font-family="Inter" opacity="0.8">N</text>
+            <text x="32" y="62" text-anchor="middle" font-size="6" fill="#C9A96E" font-family="Inter" opacity="0.5">S</text>
+            <text x="6"  y="34" text-anchor="middle" font-size="6" fill="#C9A96E" font-family="Inter" opacity="0.5">W</text>
+            <text x="58" y="34" text-anchor="middle" font-size="6" fill="#C9A96E" font-family="Inter" opacity="0.5">E</text>
+          </svg>
+        </div>
+
+        <!-- Address -->
+        <div>
+          <div class="font-inter text-xs text-gold uppercase tracking-widest mb-3">Address</div>
+          <p class="font-inter text-sm text-cream leading-relaxed">
+            188 Ban Khok Krapho, Nok Mueang<br />
+            Mueang Surin District, Surin 32000
+          </p>
+          <p class="font-inter text-xs text-cream-dim mt-1">
+            บ้านโคกกระเพอ 188 ต.นอกเมือง อ.เมืองสุรินทร์ จ.สุรินทร์
+          </p>
+        </div>
+
+        <!-- Phone -->
+        <div>
+          <div class="font-inter text-xs text-gold uppercase tracking-widest mb-3">Phone</div>
+          <a href="tel:0969627764" class="font-inter text-sm text-cream hover:text-gold transition-colors duration-300 flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.67 19.79 19.79 0 01.07 2 2 2 0 012.07 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/>
+            </svg>
+            096-962-7764
+          </a>
+        </div>
+
+        <!-- Hours table -->
+        <div>
+          <div class="font-inter text-xs text-gold uppercase tracking-widest mb-3">Opening Hours</div>
+          <div class="border border-gold/10 divide-y divide-gold/10">
+            <div class="hours-row px-4">
+              <span class="font-inter text-xs text-cream-dim uppercase tracking-wider">Monday</span>
+              <span class="font-inter text-xs text-cream">Open – 7:00 PM</span>
+            </div>
+            <div class="hours-row px-4">
+              <span class="font-inter text-xs text-cream-dim uppercase tracking-wider">Tuesday</span>
+              <span class="font-inter text-xs text-cream">Open – 7:00 PM</span>
+            </div>
+            <div class="hours-row px-4">
+              <span class="font-inter text-xs text-cream-dim uppercase tracking-wider">Wednesday</span>
+              <span class="font-inter text-xs text-cream">Open – 7:00 PM</span>
+            </div>
+            <div class="hours-row px-4">
+              <span class="font-inter text-xs text-cream-dim uppercase tracking-wider">Thursday</span>
+              <span class="font-inter text-xs text-cream">Open – 7:00 PM</span>
+            </div>
+            <div class="hours-row px-4">
+              <span class="font-inter text-xs text-cream-dim uppercase tracking-wider">Friday</span>
+              <span class="font-inter text-xs text-cream">Open – 7:00 PM</span>
+            </div>
+            <div class="hours-row px-4">
+              <span class="font-inter text-xs text-cream-dim uppercase tracking-wider">Saturday</span>
+              <span class="font-inter text-xs text-cream">Open – 7:00 PM</span>
+            </div>
+            <div class="hours-row px-4">
+              <span class="font-inter text-xs text-cream-dim uppercase tracking-wider">Sunday</span>
+              <span class="font-inter text-xs text-cream">Open – 7:00 PM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: map placeholder -->
+      <div class="fade-up delay-2 flex flex-col gap-6">
+        <div class="map-placeholder rounded-none flex-1 min-h-80 flex flex-col items-center justify-center gap-6 p-8">
+          <!-- Pin icon -->
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" stroke-width="1.5" opacity="0.6">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          <div class="text-center">
+            <div class="font-playfair text-lg text-cream mb-1">VOYAGE cafe'</div>
+            <div class="font-inter text-xs text-cream-dim">Surin, Thailand</div>
+          </div>
+          <a
+            href="https://maps.google.com/?q=188+Ban+Khok+Krapho,+Nok+Mueang,+Mueang+Surin+District,+Surin+32000"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-gold mt-2"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            View on Google Maps
+          </a>
+        </div>
+
+        <!-- Call CTA card -->
+        <div class="border border-gold/20 p-6 flex items-center justify-between">
+          <div>
+            <div class="font-inter text-xs text-gold uppercase tracking-widest mb-1">Call to Reserve</div>
+            <div class="font-playfair text-xl text-cream">096-962-7764</div>
+          </div>
+          <a href="tel:0969627764" class="btn-gold px-6 py-3 text-xs">Call Now</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- FOOTER                                              -->
+<!-- ═══════════════════════════════════════════════════ -->
+<footer class="bg-espresso border-t border-gold/10 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+
+    <!-- Top: Logo + tagline + social -->
+    <div class="flex flex-col items-center text-center mb-14">
+      <!-- Logo -->
+      <div class="mb-4">
+        <span class="font-playfair text-3xl font-bold text-gold tracking-wider">VOYAGE</span>
+        <span class="font-inter text-sm text-cream-dim tracking-widest ml-2">cafe'</span>
+      </div>
+
+      <!-- Tagline -->
+      <p class="font-playfair italic text-lg text-cream-dim mb-8">
+        "Every journey begins with a perfect cup."
+      </p>
+
+      <!-- Social icons -->
+      <div class="flex items-center gap-8 mb-10">
+        <!-- Facebook -->
+        <a href="#" aria-label="Facebook" class="social-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+          </svg>
+        </a>
+        <!-- Instagram -->
+        <a href="#" aria-label="Instagram" class="social-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          </svg>
+        </a>
+        <!-- Line -->
+        <a href="#" aria-label="LINE" class="social-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick links -->
+    <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-10 border-t border-gold/10 pt-8">
+      <a href="#home"    class="font-inter text-xs text-cream-dim hover:text-gold transition-colors uppercase tracking-widest">Home</a>
+      <a href="#menu"    class="font-inter text-xs text-cream-dim hover:text-gold transition-colors uppercase tracking-widest">Menu</a>
+      <a href="#about"   class="font-inter text-xs text-cream-dim hover:text-gold transition-colors uppercase tracking-widest">About</a>
+      <a href="#gallery" class="font-inter text-xs text-cream-dim hover:text-gold transition-colors uppercase tracking-widest">Gallery</a>
+      <a href="#contact" class="font-inter text-xs text-cream-dim hover:text-gold transition-colors uppercase tracking-widest">Find Us</a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center">
+      <p class="font-inter text-xs text-cream-dim/40 tracking-wider">
+        &copy; 2025 VOYAGE cafe' &nbsp;&middot;&nbsp; Surin, Thailand &nbsp;&middot;&nbsp; All rights reserved
+      </p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- JAVASCRIPT                                          -->
+<!-- ═══════════════════════════════════════════════════ -->
+<script>
+  /* ── Menu data ── */
+  const menuData = {
+    coffee: [
+      { name: 'Americano',   price: '50฿', seed: 'americano-coffee' },
+      { name: 'Latte',       price: '60฿', seed: 'coffee-latte' },
+      { name: 'Cappuccino',  price: '65฿', seed: 'cappuccino-cup' },
+      { name: 'Cold Brew',   price: '70฿', seed: 'cold-brew-coffee' },
+      { name: 'Espresso',    price: '45฿', seed: 'espresso-shot' },
+      { name: 'Iced Mocha',  price: '75฿', seed: 'iced-mocha-drink' },
+    ],
+    'non-coffee': [
+      { name: 'Matcha Latte',       price: '65฿', seed: 'matcha-latte-green' },
+      { name: 'Thai Tea',           price: '45฿', seed: 'thai-tea-drink' },
+      { name: 'Fresh Orange Juice', price: '55฿', seed: 'orange-juice-fresh' },
+      { name: 'Chocolate',          price: '60฿', seed: 'hot-chocolate-mug' },
+      { name: 'Butterfly Pea',      price: '50฿', seed: 'butterfly-pea-drink' },
+      { name: 'Soda Float',         price: '65฿', seed: 'soda-float-drink' },
+    ],
+    bakery: [
+      { name: 'Butter Croissant',   price: '45฿', seed: 'croissant-butter' },
+      { name: 'Banana Bread',       price: '50฿', seed: 'banana-bread-slice' },
+      { name: 'Chocolate Cookie',   price: '35฿', seed: 'chocolate-chip-cookie' },
+      { name: 'Toast Set',          price: '80฿', seed: 'toast-breakfast-set' },
+      { name: 'Muffin',             price: '40฿', seed: 'muffin-blueberry' },
+      { name: 'Waffle',             price: '85฿', seed: 'waffle-syrup-plate' },
+    ],
+  };
+
+  function buildMenuCard(item) {
+    return `
+      <div class="menu-card">
+        <div class="overflow-hidden" style="height:180px;">
+          <img
+            src="https://picsum.photos/seed/${item.seed}/400/300"
+            alt="${item.name}"
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div class="p-4">
+          <div class="flex items-center justify-between">
+            <span class="font-playfair text-base font-semibold text-cream">${item.name}</span>
+            <span class="font-inter text-sm font-bold text-gold">${item.price}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  /* Populate menu tabs */
+  Object.entries(menuData).forEach(([key, items]) => {
+    const panel = document.getElementById('tab-' + key);
+    if (panel) {
+      panel.innerHTML = items.map(buildMenuCard).join('');
+    }
+  });
+
+  /* ── Tab switching ── */
+  const tabBtns   = document.querySelectorAll('.tab-btn');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+
+      tabBtns.forEach(b => b.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      btn.classList.add('active');
+      const panel = document.getElementById('tab-' + target);
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  /* ── Mobile hamburger ── */
+  const hamBtn     = document.getElementById('ham-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  hamBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamBtn.classList.toggle('ham-open', isOpen);
+    hamBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  /* Close mobile menu on link click */
+  document.querySelectorAll('#mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamBtn.classList.remove('ham-open');
+    });
+  });
+
+  /* ── Smooth scroll ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (id === '#') return;
+      const el = document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      const offset = 72; // nav height
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+
+  /* ── Intersection Observer fade-ins ── */
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+  fadeEls.forEach(el => observer.observe(el));
+
+  /* ── Nav scroll effect ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      navbar.style.background = 'rgba(26, 15, 8, 0.95)';
+    } else {
+      navbar.style.background = 'rgba(26, 15, 8, 0.75)';
+    }
+  }, { passive: true });
+</script>
+
+</body>
+</html>
